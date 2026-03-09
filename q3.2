@@ -1,0 +1,51 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Student {
+
+private:
+    int roll;
+    string name;
+    int marks;
+
+public:
+
+    Student(int r=0,string n="",int m=0){
+        roll=r;
+        name=n;
+        marks=m;
+    }
+
+    ~Student(){
+        cout<<"Destroying student "<<name<<endl;
+    }
+
+    void write(ofstream &out){
+        out<<roll<<" "<<name<<" "<<marks<<endl;
+    }
+};
+
+int main(){
+
+    Student s[3] = {
+        Student(1,"A",80),
+        Student(2,"B",85),
+        Student(3,"C",90)
+    };
+
+    ofstream file("students.txt");
+
+    for(int i=0;i<3;i++)
+        s[i].write(file);
+
+    file.close();
+
+    ifstream read("students.txt");
+    string line;
+
+    while(getline(read,line))
+        cout<<line<<endl;
+
+    read.close();
+}
